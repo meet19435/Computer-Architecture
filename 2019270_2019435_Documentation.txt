@@ -1,0 +1,99 @@
+First pass essentials
+Tables and List:
+location_counter is used to locate address in the physical space in hexadecimal base
+
+symbol table contians labels and the variables 
+
+opcode_1 table consists of all the opcode with their respective opcode in the machine language
+
+looptemp helps to store the address of labels with their name  
+
+opl, opl1, opl2 are the tables that are used to check for the validity of opcodes and if they are provided with proper no. of operands.
+
+flabel,foperands,symbols,label etc are the tables that help us to store the labels and variables along with their address.
+
+Functions:
+type() function is used to get the type of input string we have.
+Type() function gives the type of statement encountered by the program
+It takes string as an input
+It can be of 3 kind:
+1. CLR type statement with one length
+2. ADD type statement with two length, Opcode followed by the operand
+3. Label type statement which contain either a label followed by an opcode or a label followed by an opcode which in turn is followed by the operand
+
+stpval() function helps to find the address location of the End of program
+It has no parameter
+
+In case of findvar() function it is used to find the varibales in the program and thus helping in forward referncing of the variable.
+It takes string as an Input
+
+valop() function helps to check whether the line encountered by the program contains valid opcode or not it returns 1 if valid, -1 if not.
+It takes string as an Input.
+
+exvar() function helps to check that the opcode is provided with proper no. of opcodes neither less nor more.
+It takes string as an Input
+
+binf() function helps to convert a integer to binary with all 8 bits as required by the Addressing mode of program
+binn() function helps to convert a negative integer to its respective binary number with all 8 bits
+They take string as an Input
+
+listloop() function helps us to the labels in the assembly program which helps us in the forward referncing of the labels as done in findvar()
+It has no parameter
+
+Assumptions:
+This program is based on the assumption that the assembly language is given using single accumulator architecture
+All the operands are defined at the end of the program after the STP statement
+While allocating the address the assumption is made that no statement is occupying more than 1 byte for storage hence while L_C works(Location Counter)
+If the statement starts with"#" it is considered to be a comment statement but the program also assigns a address value to it.
+
+Error statements that can be encountered:
+Variable not defined:"variable not defined"
+
+Less or more operand provided with opcode:"Invalid Opcode Cannot be compiled or excess or less operands provided at line"
+
+Invalid Opcode:"Invalid Opcode Cannot be compiled or excess or less operands provided at line"
+
+End statement not provide:"NO END STATEMENT PROVIDED"
+
+Bits exceeded:"Exceeded the available bits"
+
+Label used at different address:"Labels with different address but same name have been used".
+
+Algorithm of the program:
+The program works as described in the first pass.
+It reads the function line by line and adds it accordingly depending on whether it is a label or a variable it adds it to the the symbol table as well as the label and operands table respectively.
+
+The location_counter works in background assigning address to instructions and incrementing it's length one after each instruction.
+
+It sorts on the type function as described earlier in type1() function
+
+Then after this it runs the second pass in a way changing the assembly code with respective opcodes and the label and variables with their addresses.
+
+It writes the output in the file named "Output"
+
+Output file:
+Output file contains the code in machine language
+
+It displays Opcode with 4 bit and corresponding address of variable used with that opcode.
+
+In places of labels the program replaces the labels with their address so as it is easy to understand the address where the loop is pointing to.
+
+After stop the code displays the address of the variables with their value in binary
+
+Error reporting Strategy:
+1.It is assumed that all the assembly programs have the END Statement or "STP" otherwise the program does show an error.
+
+2.If any of the Opcode have excess or less operands provided then the program shows an error but it compiles the rest of the program with pointing to type of error and the line where it is.
+
+3.Invalid opcode are also tested by the program which are not given in the cheat sheet of assembly codes
+
+4.If the location_counter exceeds the number(255) or (FF) in hexadecimal base then ot provides with a statement of "Exceede available bits statement" 
+
+5.The program provides with an error if same label has been used but with different address
+
+6. If a variable has been used but different values have been assigned the the address of value assigned first will be used.
+
+
+
+ 
+ 
